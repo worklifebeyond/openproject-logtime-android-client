@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 import com.digitalcreativeasia.openprojectlogtime.storage.TinyDB;
-import com.digitalcreativeasia.openprojectlogtime.storage.logger.CrashReportingTree;
+import com.digitalcreativeasia.openprojectlogtime.logger.CrashReportingTree;
 
 import okhttp3.OkHttpClient;
 import timber.log.Timber;

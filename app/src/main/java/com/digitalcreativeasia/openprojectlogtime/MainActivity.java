@@ -20,6 +20,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
 
 import org.json.JSONObject;
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError err) {
                         Timber.e("err %s", err.getErrorDetail());
+                        String msg = ErrorResponseInspector.inspect(err);
                     }
                 });
     }

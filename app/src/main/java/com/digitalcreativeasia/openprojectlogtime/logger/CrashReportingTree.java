@@ -1,4 +1,4 @@
-package com.digitalcreativeasia.openprojectlogtime.storage.logger;
+package com.digitalcreativeasia.openprojectlogtime.logger;
 
 import android.util.Log;
 
