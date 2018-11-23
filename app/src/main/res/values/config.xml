@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="baseUrl">open project base url</string>
+    <string name="debug_api_key">1d2f1afefcc6cc4b4d7bc10e53f4faa9c215b3556127339f984e026574635871</string>
 </resources>
