@@ -6,7 +6,14 @@ import com.androidnetworking.AndroidNetworking;
 import com.digitalcreativeasia.openprojectlogtime.storage.TinyDB;
 import com.digitalcreativeasia.openprojectlogtime.logger.CrashReportingTree;
 
+import java.io.IOException;
+
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
 import timber.log.Timber;
 
 public class App extends Application {
@@ -23,7 +30,11 @@ public class App extends Application {
     }
 
     public interface PATH {
-        String AUTH = "users/";
+        String AUTH = "users?pageSize=500";
+    }
+
+    public interface KEY {
+        String API = "user.api.key";
     }
 
 
@@ -50,5 +61,22 @@ public class App extends Application {
         }
 
     }
+
+
+    public static void addAuth(){
+        String apiKey = getTinyDB().getString(KEY.API, "");
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .authenticator(new Authenticator() {
+                    @Override
+                    public Request authenticate(Route route, Response response) throws IOException {
+                        return response.request().newBuilder()
+                                .header("Authorization", Credentials.basic("apikey", apiKey))
+                                .build();
+                    }
+                })
+                .build();
+        AndroidNetworking.initialize(getApplication().getApplicationContext(), okHttpClient);
+    }
+
 
 }
