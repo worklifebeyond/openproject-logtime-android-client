@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="baseUrl">open project base url</string>
-    <string name="debug_api_key">test 2</string>
+    <string name="debug_api_key">test</string>
 </resources>
