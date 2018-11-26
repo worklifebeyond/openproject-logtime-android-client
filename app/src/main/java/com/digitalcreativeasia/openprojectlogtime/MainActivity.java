@@ -18,7 +18,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.digitalcreativeasia.openprojectlogtime.pojos.User;
+import com.digitalcreativeasia.openprojectlogtime.pojos.user.User;
 import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;

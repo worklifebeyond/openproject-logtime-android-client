@@ -1,5 +1,5 @@
 
-package com.digitalcreativeasia.openprojectlogtime.pojos;
+package com.digitalcreativeasia.openprojectlogtime.pojos.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

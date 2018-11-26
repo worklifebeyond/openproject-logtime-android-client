@@ -1,10 +1,10 @@
 
-package com.digitalcreativeasia.openprojectlogtime.pojos;
+package com.digitalcreativeasia.openprojectlogtime.pojos.task;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UpdateImmediately {
+public class Project {
 
     @SerializedName("href")
     @Expose
@@ -12,9 +12,6 @@ public class UpdateImmediately {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("method")
-    @Expose
-    private String method;
 
     public String getHref() {
         return href;
@@ -30,14 +27,6 @@ public class UpdateImmediately {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
     }
 
 }

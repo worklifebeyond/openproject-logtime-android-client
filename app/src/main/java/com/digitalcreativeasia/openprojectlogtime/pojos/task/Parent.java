@@ -1,17 +1,17 @@
 
-package com.digitalcreativeasia.openprojectlogtime.pojos;
+package com.digitalcreativeasia.openprojectlogtime.pojos.task;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ShowUser {
+public class Parent {
 
     @SerializedName("href")
     @Expose
     private String href;
-    @SerializedName("type")
+    @SerializedName("title")
     @Expose
-    private String type;
+    private String title;
 
     public String getHref() {
         return href;
@@ -21,12 +21,12 @@ public class ShowUser {
         this.href = href;
     }
 
-    public String getType() {
-        return type;
+    public String getTitle() {
+        return title;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }
