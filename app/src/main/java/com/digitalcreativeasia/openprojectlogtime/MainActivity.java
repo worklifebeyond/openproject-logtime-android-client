@@ -1,6 +1,7 @@
 package com.digitalcreativeasia.openprojectlogtime;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.button_login)
     AppCompatButton mButtonLogin;
 
-    Snackbar mSnackbar;
+    Snackbar mSnackBar;
     ProgressDialog mProgressDialog;
 
     @Override
@@ -47,23 +48,26 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Signin");
 
-        initViews();
+        if (App.getTinyDB().getBoolean(App.KEY.IS_LOGGED_IN))
+            this.toDashboard();
+        else
+            initViews();
 
     }
 
 
-    void showSnackBar(String message){
-        mSnackbar.setText(message);
-        mSnackbar.show();
+    void showSnackBar(String message) {
+        mSnackBar.setText(message);
+        mSnackBar.show();
     }
 
-    void showLoading(String message){
+    void showLoading(String message) {
         mProgressDialog.setMessage(message);
         mProgressDialog.show();
     }
 
 
-    void hideLoading(){
+    void hideLoading() {
         mProgressDialog.dismiss();
     }
 
@@ -72,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
 
 
-        mSnackbar = Snackbar.make(mButtonLogin, "", Snackbar.LENGTH_INDEFINITE);
-        mSnackbar.setAction("OK", view -> mSnackbar.dismiss());
+        mSnackBar = Snackbar.make(mButtonLogin, "", Snackbar.LENGTH_INDEFINITE);
+        mSnackBar.setAction("OK", view -> mSnackBar.dismiss());
 
         mButtonLogin.setOnClickListener(view -> {
             if (checkFormValid()) {
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONArray users = response.getJSONObject("_embedded").getJSONArray("elements");
                             checkUserValid(users, userIdentity, apiKey);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                             showSnackBar("Error on parsing data");
                         }
@@ -130,12 +134,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void checkUserValid(JSONArray users, String email, String apikey){
+    void checkUserValid(JSONArray users, String email, String apikey) {
         boolean isUserAvailable = false;
-        try{
-            for(int i =0; i< users.length(); i++){
+        try {
+            for (int i = 0; i < users.length(); i++) {
                 JSONObject object = users.getJSONObject(i);
-                if(object.getString("login").equals(email)){
+                if (object.getString("login").equals(email)) {
                     isUserAvailable = true;
                     User user = new Gson().fromJson(object.toString(), User.class);
                     Timber.i("Halo %s", user.getName());
@@ -147,17 +151,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            if(!isUserAvailable)
+            if (!isUserAvailable)
                 showSnackBar("Email not registered, please check again");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    void toDashboard(){
-
+    void toDashboard() {
+        startActivity(new Intent(this, OpenTaskActivity.class));
+        finish();
     }
 
 
