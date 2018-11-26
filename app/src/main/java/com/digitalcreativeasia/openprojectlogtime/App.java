@@ -30,7 +30,7 @@ public class App extends Application {
     }
 
     public interface PATH {
-        String AUTH = "users?pageSize=500";
+        String AUTH = "project/api/v3/users?pageSize=500";
     }
 
     public interface KEY {
