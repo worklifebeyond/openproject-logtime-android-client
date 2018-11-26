@@ -20,6 +20,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.digitalcreativeasia.openprojectlogtime.pojos.user.User;
+import com.digitalcreativeasia.openprojectlogtime.ui.LightStatusBar;
 import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        LightStatusBar.inspect(this, toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Signin");
 

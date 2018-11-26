@@ -1,7 +1,6 @@
 package com.digitalcreativeasia.openprojectlogtime;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -16,10 +15,16 @@ import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 
 public class OpenTaskActivity extends AppCompatActivity {
+
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mRefreshLayout;
 
     Snackbar mSnackBar;
     User mUser;
@@ -28,6 +33,7 @@ public class OpenTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_task);
+        ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,23 +46,26 @@ public class OpenTaskActivity extends AppCompatActivity {
 
     }
 
-    void initViews(){
+    void initViews() {
         mSnackBar = Snackbar.make(findViewById(R.id.toolbar), "", Snackbar.LENGTH_INDEFINITE);
         mSnackBar.setAction("OK", view -> mSnackBar.dismiss());
+
+        mRefreshLayout.setOnRefreshListener(() -> loadTask(String.valueOf(mUser.getId())));
     }
 
-    void showSnackBar(String message, String customAction, CustomSnackBarListener listener){
+    void showSnackBar(String message, String customAction, CustomSnackBarListener listener) {
         mSnackBar.setText(message);
         mSnackBar.setAction(customAction, listener::onActionClicked);
         mSnackBar.show();
     }
 
-    void showSnackBar(String message){
+    void showSnackBar(String message) {
         mSnackBar.setText(message);
         mSnackBar.show();
     }
 
-    void loadTask(String userID){
+    void loadTask(String userID) {
+        mRefreshLayout.setRefreshing(true);
         String url = String.format(App.PATH.OPEN_TASK, userID);
         AndroidNetworking.get(App.getApplication().getResources().getString(R.string.baseUrl)
                 + url)
@@ -65,11 +74,13 @@ public class OpenTaskActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        mRefreshLayout.setRefreshing(false);
                         Timber.i("resp: %s", response.toString());
                     }
 
                     @Override
                     public void onError(ANError err) {
+                        mRefreshLayout.setRefreshing(false);
                         Timber.e("err %s", err.getErrorDetail());
                         String msg = ErrorResponseInspector.inspect(err);
                         showSnackBar(msg, "Exit", view -> finish());
@@ -77,4 +88,10 @@ public class OpenTaskActivity extends AppCompatActivity {
                 });
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if (!mRefreshLayout.isRefreshing())
+            super.onBackPressed();
+    }
 }

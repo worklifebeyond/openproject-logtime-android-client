@@ -9,6 +9,11 @@
     tools:context=".OpenTaskActivity"
     tools:showIn="@layout/activity_open_task">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/swipe_container"
+        android:layout_height="match_parent">
 
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
