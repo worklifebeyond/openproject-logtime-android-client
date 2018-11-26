@@ -1,7 +1,9 @@
 package com.digitalcreativeasia.openprojectlogtime.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.digitalcreativeasia.openprojectlogtime.R;
+import com.digitalcreativeasia.openprojectlogtime.fragments.DescFragment;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
 import com.digitalcreativeasia.openprojectlogtime.utils.ISO8601;
 
 import java.text.ParseException;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
@@ -68,6 +73,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 model.getLinks().getParent().getTitle()+" > "+model.getLinks().getProject().getTitle();
         holder.textProjectName.setText(projectName);
         holder.itemView.setOnClickListener(view -> listener.onSelect(model));
+        holder.buttonDesc.setOnClickListener(view -> {
+            DescFragment bottomSheet = new DescFragment();
+            Bundle arg = new Bundle();
+            arg.putString(DescFragment.ARGS_CONTENT, model.getDescription().getHtml());
+            bottomSheet.setArguments(arg);
+            bottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(),
+                    "BottomSheet");
+        });
 
     }
 
@@ -91,6 +104,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView textLastActivity;
         TextView textTitle;
         TextView textProjectName;
+        AppCompatButton buttonDesc;
 
         public ViewHolder(View view) {
             super(view);
@@ -100,7 +114,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             textLastActivity = view.findViewById(R.id.text_last_activity);
             textTitle = view.findViewById(R.id.text_title);
             textProjectName = view.findViewById(R.id.text_project);
-
+            buttonDesc = view.findViewById(R.id.button_desc);
         }
     }
 

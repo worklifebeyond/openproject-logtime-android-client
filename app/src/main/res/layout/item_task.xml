@@ -1,91 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/separator"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:layout_height="wrap_content">
+    android:background="@color/separator"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        >
+        android:padding="5dp">
+
         <TextView
+            android:id="@+id/text_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/opensans_light"
-            android:text="45%"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:id="@+id/text_progress"
-            />
+            android:fontFamily="@font/opensans_light"
+            android:text="45%" />
+
         <ProgressBar
-            android:layout_toLeftOf="@id/text_progress"
-            android:layout_marginRight="10dp"
-            android:layout_centerInParent="true"
+            android:id="@+id/progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progress"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/text_progress"
             android:max="100"
-            android:progress="45"/>
+            android:progress="45" />
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/text_last_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_light"
-        android:text="3 Hours ago"
-        android:id="@+id/text_last_activity"
         android:layout_marginLeft="10dp"
-        />
+        android:fontFamily="@font/opensans_light"
+        android:text="3 Hours ago" />
 
     <TextView
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/mainSignature"
-        android:fontFamily="@font/opensans_light"
-        android:textSize="16sp"
-        android:id="@+id/text_title"
-        android:textStyle="bold"
-        android:text="[138] Open Sans Light Open Sans Light  Open Sans Light  Open Sans Light "
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        />
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/opensans_light"
+        android:text="[138] Open Sans Light Open Sans Light  Open Sans Light  Open Sans Light "
+        android:textColor="@color/mainSignature"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        >
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Project: "
-            android:textColor="@color/mainSignature"
-            android:padding="5dp"
-            android:fontFamily="@font/opensans_bold"
+            android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
-            />
+            android:fontFamily="@font/opensans_bold"
+            android:padding="5dp"
+            android:text="Project: "
+            android:textColor="@color/mainSignature" />
+
         <TextView
+            android:id="@+id/text_project"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Open Sans Light > Open sans"
-            android:textColor="@color/colorAccent"
-            android:padding="5dp"
-            android:id="@+id/text_project"
-            android:fontFamily="@font/opensans_light"
+            android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="0dp"
-            />
+            android:fontFamily="@font/opensans_light"
+            android:padding="5dp"
+            android:text="Open Sans Light > Open sans"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|right"
+            android:backgroundTint="@color/mainSignature"
+            android:text="Description"
+            android:id="@+id/button_desc"
+            android:fontFamily="@font/opensans_light"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>
