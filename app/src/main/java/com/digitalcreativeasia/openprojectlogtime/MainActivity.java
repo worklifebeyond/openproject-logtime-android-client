@@ -140,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
                     User user = new Gson().fromJson(object.toString(), User.class);
                     Timber.i("Halo %s", user.getName());
                     App.getTinyDB().putString(App.KEY.API, apikey);
-                    App.addAuth();
+                    App.plantAuth();
+                    App.getTinyDB().putObject(App.KEY.USER, user);
+                    App.getTinyDB().putBoolean(App.KEY.IS_LOGGED_IN, true);
                     this.toDashboard();
                 }
             }

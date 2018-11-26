@@ -36,6 +36,8 @@ public class App extends Application {
 
     public interface KEY {
         String API = "user.api.key";
+        String USER = "uer.key";
+        String IS_LOGGED_IN = "is.logged.in";
     }
 
 
@@ -64,17 +66,12 @@ public class App extends Application {
     }
 
 
-    public static void addAuth(){
+    public static void plantAuth(){
         String apiKey = getTinyDB().getString(KEY.API, "");
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .authenticator(new Authenticator() {
-                    @Override
-                    public Request authenticate(Route route, Response response) throws IOException {
-                        return response.request().newBuilder()
-                                .header("Authorization", Credentials.basic("apikey", apiKey))
-                                .build();
-                    }
-                })
+                .authenticator((route, response) -> response.request().newBuilder()
+                        .header("Authorization", Credentials.basic("apikey", apiKey))
+                        .build())
                 .build();
         AndroidNetworking.initialize(getApplication().getApplicationContext(), okHttpClient);
     }
