@@ -33,6 +33,7 @@ public class App extends Application {
         String AUTH = "project/api/v3/users?pageSize=500";
         String OPEN_TASK = "project/api/v3/work_packages?filters=[{\"assignee\":{\"operator\":\"=\",\"values\":[\"%s\"]}},{\"status\":{\"operator\":\"o\",\"values\":[\"5\",\"3\"]}}]&offset=1&pageSize=500&sortBy=[[\"updated_at\",\"desc\"]]";
         String TIME_ENTRIES_LIST = "project/api/v3/time_entries?filters=[{ \"work_package\": { \"operator\": \"=\", \"values\": [\"%s\"] } }]";
+        String ENUM_LIST = "enum";
     }
 
     public interface KEY {
