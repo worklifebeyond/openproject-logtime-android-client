@@ -1,7 +1,6 @@
 package com.digitalcreativeasia.openprojectlogtime.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import com.digitalcreativeasia.openprojectlogtime.R;
 import com.digitalcreativeasia.openprojectlogtime.fragments.DescFragment;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
 import com.digitalcreativeasia.openprojectlogtime.utils.ISO8601;
+import com.franmontiel.fullscreendialog.FullScreenDialogFragment;
 
 import java.text.ParseException;
 import java.util.List;
@@ -74,12 +74,16 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         holder.textProjectName.setText(projectName);
         holder.itemView.setOnClickListener(view -> listener.onSelect(model));
         holder.buttonDesc.setOnClickListener(view -> {
-            DescFragment bottomSheet = new DescFragment();
+
             Bundle arg = new Bundle();
             arg.putString(DescFragment.ARGS_CONTENT, model.getDescription().getHtml());
-            bottomSheet.setArguments(arg);
-            bottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(),
-                    "BottomSheet");
+            new FullScreenDialogFragment.Builder(context)
+                    .setTitle("Description")
+                    //.setConfirmButton("OK")
+                    .setContent(DescFragment.class, arg)
+                    .build()
+            .show(((AppCompatActivity) context).getSupportFragmentManager(), "dialog");
+
         });
 
     }

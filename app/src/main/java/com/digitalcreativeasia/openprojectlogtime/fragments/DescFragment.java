@@ -7,30 +7,41 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.digitalcreativeasia.openprojectlogtime.R;
-import com.digitalcreativeasia.openprojectlogtime.base.BaseBottomDialog;
+import com.franmontiel.fullscreendialog.FullScreenDialogContent;
+import com.franmontiel.fullscreendialog.FullScreenDialogController;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-public class DescFragment extends BaseBottomDialog {
+public class DescFragment extends Fragment implements FullScreenDialogContent {
 
-    public static String ARGS_CONTENT = "args.content";
-
-
+    private FullScreenDialogController dialogController;
+    public static final String ARGS_CONTENT = "args.content";
 
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_desc, container, false);
-
-        WebView webView = v.findViewById(R.id.webView);
-        String content = (getArguments().getString(ARGS_CONTENT).equals("")) ? "No Descriptions"
-                : getArguments().getString(ARGS_CONTENT);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_desc, container, false);
+        WebView webView = view.findViewById(R.id.webView);
+        String content = getArguments().getString(ARGS_CONTENT);
         webView.loadData(content, "text/html", "UTF-8");
-
-
-        return v;
+        return view;
     }
 
+
+    @Override
+    public void onDialogCreated(FullScreenDialogController dialogController) {
+        this.dialogController = dialogController;
+    }
+
+    @Override
+    public boolean onConfirmClick(FullScreenDialogController dialogController) {
+        return false;
+    }
+
+    @Override
+    public boolean onDiscardClick(FullScreenDialogController dialogController) {
+        return false;
+    }
 }
