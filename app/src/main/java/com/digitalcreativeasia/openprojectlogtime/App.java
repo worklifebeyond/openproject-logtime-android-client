@@ -6,6 +6,8 @@ import com.androidnetworking.AndroidNetworking;
 import com.digitalcreativeasia.openprojectlogtime.storage.TinyDB;
 import com.digitalcreativeasia.openprojectlogtime.logger.CrashReportingTree;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import java.io.IOException;
 
 import okhttp3.Authenticator;
@@ -32,7 +34,7 @@ public class App extends Application {
     public interface PATH {
         String AUTH = "project/api/v3/users?pageSize=500";
         String OPEN_TASK = "project/api/v3/work_packages?filters=[{\"assignee\":{\"operator\":\"=\",\"values\":[\"%s\"]}},{\"status\":{\"operator\":\"o\",\"values\":[\"5\",\"3\"]}}]&offset=1&pageSize=500&sortBy=[[\"updated_at\",\"desc\"]]";
-        String TIME_ENTRIES_LIST = "project/api/v3/time_entries?filters=[{ \"work_package\": { \"operator\": \"=\", \"values\": [\"%s\"] } }]";
+        String TIME_ENTRIES_LIST = "project/api/v3/time_entries?filters=[{ \"work_package\": { \"operator\": \"=\", \"values\": [\"%s\"] } }]&pageSize=500&sortBy=[[\"id\",\"desc\"]]";
         String ENUM_LIST = "enum";
     }
 
@@ -52,6 +54,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        JodaTimeAndroid.init(this);
         sApplication = this;
         tinyDB = new TinyDB(sApplication);
 

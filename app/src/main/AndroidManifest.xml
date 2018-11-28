@@ -25,6 +25,10 @@
         <activity
             android:name=".OpenTaskActivity"
             android:label="@string/title_activity_open_task"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TimeEntriesActivity"
+            android:label="@string/title_activity_time_entries"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

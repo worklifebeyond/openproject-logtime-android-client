@@ -1,6 +1,8 @@
 package com.digitalcreativeasia.openprojectlogtime;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -138,6 +140,9 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
 
     @Override
     public void onSelect(TaskModel model) {
-
+        Intent intent = new Intent(this, TimeEntriesActivity.class);
+        intent.putExtra(TimeEntriesActivity.INTENT_TASK_MODEL,
+                new Gson().toJson(model));
+        startActivity(intent);
     }
 }
