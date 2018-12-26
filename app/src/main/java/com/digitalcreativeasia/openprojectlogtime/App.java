@@ -47,6 +47,8 @@ public class App extends Application {
         String CURRENT_PROJECT_ID = "current.project.id";
         String CURRENT_WORK_PACKAGE_ID = "current.work.package.id";
         String CURRENT_WORK_PACKAGE_NAME = "current.work.packages.name";
+        String CURRENT_TASK_MODEL = "current.task.model";
+        int NOTIFICATION_CODE = 1991;
     }
 
 
