@@ -42,6 +42,11 @@ public class App extends Application {
         String API = "user.api.key";
         String USER = "uer.key";
         String IS_LOGGED_IN = "is.logged.in";
+        String IS_ON_TASK = "is.on.task";
+        String TIME_START = "time.start";
+        String CURRENT_PROJECT_ID = "current.project.id";
+        String CURRENT_WORK_PACKAGE_ID = "current.work.package.id";
+        String CURRENT_WORK_PACKAGE_NAME = "current.work.packages.name";
     }
 
 

@@ -1,7 +1,11 @@
 package com.digitalcreativeasia.openprojectlogtime;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -23,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +58,9 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
     @BindView(R.id.text_work_packages)
     TextView mWorkPackagesText;
 
+    @BindView(R.id.add_icon)
+    ImageView mAddImage;
+
     TaskModel mTaskModel;
     Snackbar mSnackBar;
     TimeEntriesAdapter mAdapter;
@@ -67,6 +75,27 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         setSupportActionBar(toolbar);
 
         mTaskModel = new Gson().fromJson(getIntent().getStringExtra(INTENT_TASK_MODEL), TaskModel.class);
+
+
+        mAddImage.setOnClickListener(view -> {
+            if (App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)) {
+                Toast.makeText(this, "You have a task that has not been completed.", Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                String projectId = mTaskModel.getLinks().getProject().getHref();
+                String workPackagesId = mTaskModel.getId().toString();
+                projectId = projectId.substring(projectId.lastIndexOf("/") + 1).trim();
+                String wpName = mTaskModel.getSubject();
+
+                App.getTinyDB().putBoolean(App.KEY.IS_ON_TASK, true);
+                App.getTinyDB().putString(App.KEY.CURRENT_PROJECT_ID, projectId);
+                App.getTinyDB().putString(App.KEY.CURRENT_WORK_PACKAGE_ID, workPackagesId);
+                App.getTinyDB().putString(App.KEY.CURRENT_WORK_PACKAGE_NAME, wpName);
+                App.getTinyDB().putLong(App.KEY.TIME_START, new Date().getTime());
+
+            }
+        });
+
         timeEntryTypes = new ArrayList<>();
         timeEntriesList = new ArrayList<>();
 
@@ -80,10 +109,6 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         mSnackBar.show();
     }
 
-    void showSnackBar(String message) {
-        mSnackBar.setText(message);
-        mSnackBar.show();
-    }
 
     private void initViews() {
         mRefreshLayout.setOnRefreshListener(() ->
