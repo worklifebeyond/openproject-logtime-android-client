@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.github.franmontiel:FullScreenDialog:1.0.1'
     implementation 'net.danlew:android.joda:2.10.1'
+    //implementation 'com.github.iwgang:countupview:2.1.6'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
