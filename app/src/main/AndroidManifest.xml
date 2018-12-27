@@ -33,6 +33,7 @@
         <activity
             android:name=".OnTaskActivity"
             android:label="@string/title_activity_on_task"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

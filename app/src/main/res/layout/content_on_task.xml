@@ -8,4 +8,160 @@
     tools:context=".OnTaskActivity"
     tools:showIn="@layout/activity_on_task">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/opensans_light"
+                    android:gravity="center_horizontal"
+                    android:text="You are currently on a task:" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:padding="2dp"
+                        android:text="Project: "
+                        android:textColor="@color/mainSignature" />
+
+                    <TextView
+                        android:id="@+id/text_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="0dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:padding="2dp"
+                        android:text="Development Development Development Development Development Development"
+                        android:textColor="@color/colorAccent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:padding="2dp"
+                        android:text="Work Packages: "
+                        android:textColor="@color/mainSignature" />
+
+                    <TextView
+                        android:id="@+id/text_work_packages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="0dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:padding="2dp"
+                        android:text="Development Development Development Development Development Development"
+                        android:textColor="@color/colorAccent" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/separator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/opensans_light"
+                    android:text="Time spent on this task" />
+
+                <com.digitalcreativeasia.openprojectlogtime.ui.CountupView
+                    android:id="@+id/countup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    app:isHideTimeBackground="false"
+                    app:isShowDay="false"
+                    app:isShowHour="true"
+                    app:isShowMillisecond="false"
+                    app:isShowMinute="true"
+                    app:isShowSecond="true"
+                    app:isSuffixTextBold="true"
+                    app:suffixDay="D"
+                    app:suffixGravity="center"
+                    app:suffixHour="H"
+                    app:suffixLRMargin="10dp"
+                    app:suffixMillisecond="SS"
+                    app:suffixMinute="M"
+                    app:suffixSecond="S"
+                    app:suffixTextColor="@color/colorAccent"
+                    app:suffixTextSize="20sp"
+                    app:timeBgColor="@color/colorPrimaryDark"
+                    app:timeBgDivisionLineSize="3dp"
+                    app:timeBgRadius="5dp"
+                    app:timeBgSize="50dp"
+                    app:timeTextColor="#FFFFFF"
+                    app:timeTextSize="30sp" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Submit Task"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/mainSignature"
+                    android:fontFamily="@font/opensans_light"
+                    android:id="@+id/button_submit"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel Task"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/colorAccent"
+                    android:fontFamily="@font/opensans_light"
+                    android:id="@+id/button_cancel"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

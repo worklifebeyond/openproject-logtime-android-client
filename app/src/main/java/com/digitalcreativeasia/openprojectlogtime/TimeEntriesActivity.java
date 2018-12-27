@@ -67,6 +67,8 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
 
     @BindView(R.id.add_icon)
     ImageView mAddImage;
+    @BindView(R.id.text_add)
+    TextView mAddText;
 
     TaskModel mTaskModel;
     Snackbar mSnackBar;
@@ -87,32 +89,8 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         mTaskModel = new Gson().fromJson(getIntent().getStringExtra(INTENT_TASK_MODEL), TaskModel.class);
 
 
-        mAddImage.setOnClickListener(view -> {
-            if (App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)) {
-                Toast.makeText(this, "You have a task that has not been completed.", Toast.LENGTH_LONG)
-                        .show();
-                showSnackBar("You have a task that has not been completed.", "GOTO TASK",
-                        view1 -> {
-                            //todo: go to current
-                        });
-            } else {
-                String projectId = mTaskModel.getLinks().getProject().getHref();
-                String workPackagesId = mTaskModel.getId().toString();
-                projectId = projectId.substring(projectId.lastIndexOf("/") + 1).trim();
-                String wpName = mTaskModel.getSubject();
-
-                App.getTinyDB().putBoolean(App.KEY.IS_ON_TASK, true);
-                App.getTinyDB().putString(App.KEY.CURRENT_PROJECT_ID, projectId);
-                App.getTinyDB().putString(App.KEY.CURRENT_WORK_PACKAGE_ID, workPackagesId);
-                App.getTinyDB().putString(App.KEY.CURRENT_WORK_PACKAGE_NAME, wpName);
-                App.getTinyDB().putLong(App.KEY.TIME_START, new Date().getTime());
-                App.getTinyDB().putObject(App.KEY.CURRENT_TASK_MODEL, mTaskModel);
-
-                showNotification(wpName);
-                finish();
-
-            }
-        });
+        mAddImage.setOnClickListener(view -> addTimeEntry());
+        mAddText.setOnClickListener(view -> addTimeEntry());
 
         timeEntryTypes = new ArrayList<>();
         timeEntriesList = new ArrayList<>();
@@ -121,10 +99,35 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         initViews();
     }
 
+    private void addTimeEntry(){
+        if (App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)) {
+            showSnackBar("You have a task that has not been completed.", "GOTO TASK",
+                    view1 -> {
+                        startActivity(new Intent(this, OnTaskActivity.class));
+                    });
+        } else {
+            String projectId = mTaskModel.getLinks().getProject().getHref();
+            String workPackagesId = mTaskModel.getId().toString();
+            projectId = projectId.substring(projectId.lastIndexOf("/") + 1).trim();
+            String wpName = mTaskModel.getSubject();
+
+            App.getTinyDB().putBoolean(App.KEY.IS_ON_TASK, true);
+            App.getTinyDB().putString(App.KEY.CURRENT_PROJECT_ID, projectId);
+            App.getTinyDB().putString(App.KEY.CURRENT_WORK_PACKAGE_ID, workPackagesId);
+            App.getTinyDB().putString(App.KEY.CURRENT_WORK_PACKAGE_NAME, wpName);
+            App.getTinyDB().putLong(App.KEY.TIME_START, new Date().getTime());
+            App.getTinyDB().putObject(App.KEY.CURRENT_TASK_MODEL, mTaskModel);
+
+            showNotification(wpName);
+            finish();
+
+        }
+    }
+
     private void showNotification(String desc) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(this, OnTaskActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.alarm_icon)
                 .setColor(getResources().getColor(R.color.colorAccent))

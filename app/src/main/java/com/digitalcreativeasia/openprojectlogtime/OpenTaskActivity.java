@@ -1,6 +1,11 @@
 package com.digitalcreativeasia.openprojectlogtime;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -25,6 +30,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -45,6 +51,9 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
 
     List<TaskModel> taskModelList;
     TaskListAdapter mAdapter;
+
+    private static final String NOTIFICATION_CHANNEL_ID = "com.digitalcreativeasia.openprojectlogtime.taskrunning";
+    private static final CharSequence NOTIFICATION_CHANNEL_NAME = "ONTASK RUNNING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +83,33 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+        if(App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)){
+            showNotification(App.getTinyDB().getString(App.KEY.CURRENT_WORK_PACKAGE_NAME, "Task"));
+            startActivity(new Intent(this, OnTaskActivity.class));
+        }
 
+    }
+
+    private void showNotification(String desc) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, OnTaskActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.alarm_icon)
+                .setColor(getResources().getColor(R.color.colorAccent))
+                .setContentTitle("LogTimer")
+                .setContentInfo(desc)
+                .setOngoing(true)
+                .setContentIntent(resultPendingIntent);
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(desc);
+            channel.setVibrationPattern(new long[]{0});
+            channel.enableVibration(true);
+            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.createNotificationChannel(channel);
+        }
+        notificationManager.notify(App.KEY.NOTIFICATION_CODE, builder.build());
     }
 
     void showSnackBar(String message, String customAction, CustomSnackBarListener listener) {
