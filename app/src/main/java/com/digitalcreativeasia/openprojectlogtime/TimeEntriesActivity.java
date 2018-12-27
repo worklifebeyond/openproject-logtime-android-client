@@ -52,7 +52,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
 
     public static final String INTENT_TASK_MODEL = "intent.task.model";
 
-    List<TimeEntryType> timeEntryTypes;
+    ArrayList<Object> timeEntryTypes;
     List<TimeEntry> timeEntriesList;
 
     @BindView(R.id.swipe_container)
@@ -184,6 +184,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
                                 TimeEntryType entryType = new Gson().fromJson(response.getJSONObject(i).toString(), TimeEntryType.class);
                                 timeEntryTypes.add(entryType);
                             }
+                            App.getTinyDB().putListObject(App.KEY.ENTRY_TYPE, timeEntryTypes);
                             getTimeEntries(true, String.valueOf(mTaskModel.getId()));
                         } catch (Exception e) {
                             e.printStackTrace();

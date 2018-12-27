@@ -49,6 +49,7 @@ public class App extends Application {
         String CURRENT_WORK_PACKAGE_NAME = "current.work.packages.name";
         String CURRENT_TASK_MODEL = "current.task.model";
         int NOTIFICATION_CODE = 1991;
+        String ENTRY_TYPE = "current.entry.type";
     }
 
 
