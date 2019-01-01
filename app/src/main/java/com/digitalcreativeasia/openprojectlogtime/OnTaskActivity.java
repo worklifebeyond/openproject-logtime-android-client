@@ -35,6 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OnTaskActivity extends AppCompatActivity {
 
@@ -122,16 +124,25 @@ public class OnTaskActivity extends AppCompatActivity {
 
     void submit(String spent, String comments, String activityId) {
         progressDialog.show();
+
         String apiKey = App.getTinyDB().getString(App.KEY.API, "");
+        Map<String, String> map = new HashMap<>();
+        map.put("project_id", App.getTinyDB().getString(App.KEY.CURRENT_PROJECT_ID, "0"));
+        map.put("user_id", mUser.getId().toString());
+        map.put("work_package_id", App.getTinyDB().getString(App.KEY.CURRENT_WORK_PACKAGE_ID, "0"));
+        map.put("hours", spent);
+        map.put("comments", comments);
+        map.put("user_name", mUser.getFirstName()+" "+mUser.getLastName());
+        map.put("user_email", mUser.getLogin());
+        map.put("activity_id", activityId);
+        map.put("project_name", mTaskModel.getLinks().getProject().getTitle());
+        map.put("wp_name", mTaskModel.getSubject());
+        Timber.e("err "+map.toString());
+
         AndroidNetworking.post(App.getApplication().getResources().getString(R.string.time_entries_api))
                 .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
                 .setPriority(Priority.HIGH)
-                .addBodyParameter("project_id", App.getTinyDB().getString(App.KEY.CURRENT_PROJECT_ID, "0"))
-                .addBodyParameter("user_id", mUser.getId().toString())
-                .addBodyParameter("work_package_id", App.getTinyDB().getString(App.KEY.CURRENT_WORK_PACKAGE_ID, "0"))
-                .addBodyParameter("hours", spent)
-                .addBodyParameter("comments", comments)
-                .addBodyParameter("activity_id", activityId)
+                .addBodyParameter(map)
                 .build()
                 .getAsOkHttpResponse(new OkHttpResponseListener() {
                     @Override

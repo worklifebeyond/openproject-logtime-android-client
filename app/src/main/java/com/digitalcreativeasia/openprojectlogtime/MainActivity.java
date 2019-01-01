@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 String apiKey = mInputApiKey.getText().toString();
                 String userIdentity = mInputEmail.getText().toString();
                 //debug
-                apiKey = App.getDebugKey();
+                //apiKey = App.getDebugKey();
                 login(apiKey, userIdentity);
             }
         });

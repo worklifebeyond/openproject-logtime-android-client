@@ -190,6 +190,7 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         intent.putExtra(TimeEntriesActivity.INTENT_TASK_MODEL,
                 new Gson().toJson(model));
         startActivity(intent);
+
     }
 
     @Override

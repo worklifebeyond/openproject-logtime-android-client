@@ -37,6 +37,7 @@ public class App extends Application {
         String TIME_ENTRIES_LIST = "project/api/v3/time_entries?filters=[{ \"work_package\": { \"operator\": \"=\", \"values\": [\"%s\"] } }]&pageSize=500&sortBy=[[\"id\",\"desc\"]]";
         String ENUM_LIST = "enum";
         String UPDATE_PERCENTAGE = "project/api/v3/work_packages/";
+        String GETLIST_STATUS = "project/api/v3/statuses";
     }
 
     public interface KEY {

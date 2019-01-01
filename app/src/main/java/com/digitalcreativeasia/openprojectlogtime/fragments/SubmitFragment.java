@@ -115,7 +115,7 @@ public class SubmitFragment extends Fragment implements FullScreenDialogContent 
             }else {
                 Bundle args = new Bundle();
                 args.putBoolean("ok", true);
-                args.putString(OnTaskActivity.SPENT_TIME, String.valueOf(spent));
+                args.putString(OnTaskActivity.SPENT_TIME, String.valueOf(round(spent)));
                 args.putString(OnTaskActivity.COMMENTS, mCommentEdit.getText().toString());
                 args.putString(OnTaskActivity.ACTIVITY_ID, ids.get(mSpinnerType.getSelectedIndex()));
                 dialogController.confirm(args);

@@ -29,6 +29,7 @@ import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import org.joda.time.Period;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -69,6 +70,8 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
     ImageView mAddImage;
     @BindView(R.id.text_add)
     TextView mAddText;
+    @BindView(R.id.text_total_spent)
+    TextView mTextTotalSpent;
 
     TaskModel mTaskModel;
     Snackbar mSnackBar;
@@ -92,6 +95,9 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         mAddImage.setOnClickListener(view -> addTimeEntry());
         mAddText.setOnClickListener(view -> addTimeEntry());
 
+        Period period = Period.parse(mTaskModel.getSpentTime());
+        mTextTotalSpent.setText("Duration (H:M) "+period.getHours()+":"+period.getMinutes());
+
         timeEntryTypes = new ArrayList<>();
         timeEntriesList = new ArrayList<>();
 
@@ -99,7 +105,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         initViews();
     }
 
-    private void addTimeEntry(){
+    private void addTimeEntry() {
         if (App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)) {
             showSnackBar("You have a task that has not been completed.", "GOTO TASK",
                     view1 -> {
@@ -163,7 +169,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
 
     private void initViews() {
         //mRefreshLayout.setOnRefreshListener(() ->
-           //     getTimeEntries(false, String.valueOf(mTaskModel.getId())));
+        //     getTimeEntries(false, String.valueOf(mTaskModel.getId())));
         mSnackBar = Snackbar.make(findViewById(R.id.toolbar), "", Snackbar.LENGTH_INDEFINITE);
         mSnackBar.setAction("OK", view -> mSnackBar.dismiss());
 
