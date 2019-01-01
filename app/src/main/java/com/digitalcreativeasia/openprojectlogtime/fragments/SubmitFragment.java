@@ -1,5 +1,6 @@
 package com.digitalcreativeasia.openprojectlogtime.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,28 +8,43 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.OkHttpResponseListener;
 import com.digitalcreativeasia.openprojectlogtime.App;
+import com.digitalcreativeasia.openprojectlogtime.OnTaskActivity;
 import com.digitalcreativeasia.openprojectlogtime.R;
+import com.digitalcreativeasia.openprojectlogtime.interfaces.CustomSnackBarListener;
 import com.digitalcreativeasia.openprojectlogtime.pojos.TimeEntryType;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
+import com.digitalcreativeasia.openprojectlogtime.pojos.user.User;
+import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
 import com.franmontiel.fullscreendialog.FullScreenDialogContent;
 import com.franmontiel.fullscreendialog.FullScreenDialogController;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.angmarch.views.NiceSpinner;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Credentials;
+import okhttp3.Response;
+import timber.log.Timber;
 
 public class SubmitFragment extends Fragment implements FullScreenDialogContent {
 
@@ -76,8 +92,6 @@ public class SubmitFragment extends Fragment implements FullScreenDialogContent 
         mProjectText.setText(mTaskModel.getLinks().getProject().getTitle());
         mWpText.setText(mTaskModel.getSubject());
 
-
-        //App.getTinyDB().putListObject(App.KEY.ENTRY_TYPE, timeEntryTypes);
         ArrayList<Object> entryTypes = App.getTinyDB().getListObject(App.KEY.ENTRY_TYPE, TimeEntryType.class);
         List<String> titles = new ArrayList<>();
         List<String> ids = new ArrayList<>();
@@ -93,14 +107,27 @@ public class SubmitFragment extends Fragment implements FullScreenDialogContent 
 
         double spent =
                 (new Date().getTime() - App.getTinyDB().getLong(App.KEY.TIME_START, new Date().getTime())) / 3.6e+6;
-        mTimespentText.setText(String.valueOf(round(spent))+"Hrs");
+        mTimespentText.setText(String.valueOf(round(spent)) + "Hrs");
 
+        mSubmitButton.setOnClickListener(view1 -> {
+            if(mCommentEdit.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Comment is empty", Toast.LENGTH_LONG).show();
+            }else {
+                Bundle args = new Bundle();
+                args.putBoolean("ok", true);
+                args.putString(OnTaskActivity.SPENT_TIME, String.valueOf(spent));
+                args.putString(OnTaskActivity.COMMENTS, mCommentEdit.getText().toString());
+                args.putString(OnTaskActivity.ACTIVITY_ID, ids.get(mSpinnerType.getSelectedIndex()));
+                dialogController.confirm(args);
+            }
+        });
 
         return view;
     }
 
     Double round(Double val) {
-        return new BigDecimal(val.toString()).setScale(2,RoundingMode.HALF_UP).doubleValue();
+        return new BigDecimal(val.toString()).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
+
 
 }
