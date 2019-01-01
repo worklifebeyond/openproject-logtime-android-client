@@ -154,10 +154,16 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         mSnackBar.show();
     }
 
-
-    private void initViews() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         mRefreshLayout.setOnRefreshListener(() ->
                 getTimeEntries(false, String.valueOf(mTaskModel.getId())));
+    }
+
+    private void initViews() {
+        //mRefreshLayout.setOnRefreshListener(() ->
+           //     getTimeEntries(false, String.valueOf(mTaskModel.getId())));
         mSnackBar = Snackbar.make(findViewById(R.id.toolbar), "", Snackbar.LENGTH_INDEFINITE);
         mSnackBar.setAction("OK", view -> mSnackBar.dismiss());
 

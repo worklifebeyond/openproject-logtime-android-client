@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -67,14 +69,20 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         mUser = App.getTinyDB().getObject(App.KEY.USER, User.class);
         taskModelList = new ArrayList<>();
 
-        if(App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)){
+        if (App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)) {
             startActivity(new Intent(this, OnTaskActivity.class));
         }
         this.initViews();
 
+        //loadTask(String.valueOf(mUser.getId()));
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadTask(String.valueOf(mUser.getId()));
-
-
     }
 
     void initViews() {
@@ -86,7 +94,7 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        if(App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)){
+        if (App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)) {
             showNotification(App.getTinyDB().getString(App.KEY.CURRENT_WORK_PACKAGE_NAME, "Task"));
             startActivity(new Intent(this, OnTaskActivity.class));
         }
@@ -182,5 +190,17 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         intent.putExtra(TimeEntriesActivity.INTENT_TASK_MODEL,
                 new Gson().toJson(model));
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh(boolean success) {
+        if (success) {
+            Toast.makeText(this, "Sukses update presentasi", Toast.LENGTH_LONG).show();
+            loadTask(String.valueOf(mUser.getId()));
+        } else {
+            showSnackBar("Gagal update prosentase", "RELOAD", view -> {
+                loadTask(String.valueOf(mUser.getId()));
+            });
+        }
     }
 }

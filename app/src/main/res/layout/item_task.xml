@@ -2,35 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="10dp"
     android:background="@color/separator"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        >
 
         <TextView
-            android:id="@+id/text_progress"
+            android:layout_marginTop="10dp"
+            android:id="@+id/progress_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
             android:fontFamily="@font/opensans_light"
-            android:text="45%" />
+            android:text="Progress" />
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
+
+        <RelativeLayout
+            android:layout_below="@id/progress_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/text_progress"
-            android:max="100"
-            android:progress="45" />
+            android:padding="5dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/opensans_light"
+                android:text="Change" />
+
+            <TextView
+                android:id="@+id/text_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/button_change"
+                android:fontFamily="@font/opensans_light"
+                android:text="45%" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/text_progress"
+                android:max="100"
+                android:progress="45" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <TextView
@@ -92,13 +120,13 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|right"
+            android:layout_gravity="left|start"
             android:backgroundTint="@color/mainSignature"
-            android:text="Description"
-            android:id="@+id/button_desc"
             android:fontFamily="@font/opensans_light"
+            android:text="Description"
             android:textColor="@color/white" />
     </LinearLayout>
 
