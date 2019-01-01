@@ -119,6 +119,8 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
             App.getTinyDB().putObject(App.KEY.CURRENT_TASK_MODEL, mTaskModel);
 
             showNotification(wpName);
+            Toast.makeText(this, "New time entry created", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, OnTaskActivity.class));
             finish();
 
         }
@@ -131,7 +133,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.alarm_icon)
                 .setColor(getResources().getColor(R.color.colorAccent))
-                .setContentTitle("LogTimer")
+                .setContentTitle(desc)
                 .setContentInfo(desc)
                 .setOngoing(true)
                 .setContentIntent(resultPendingIntent);

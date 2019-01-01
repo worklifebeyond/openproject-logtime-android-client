@@ -67,6 +67,9 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         mUser = App.getTinyDB().getObject(App.KEY.USER, User.class);
         taskModelList = new ArrayList<>();
 
+        if(App.getTinyDB().getBoolean(App.KEY.IS_ON_TASK)){
+            startActivity(new Intent(this, OnTaskActivity.class));
+        }
         this.initViews();
 
         loadTask(String.valueOf(mUser.getId()));
@@ -97,7 +100,7 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.alarm_icon)
                 .setColor(getResources().getColor(R.color.colorAccent))
-                .setContentTitle("LogTimer")
+                .setContentTitle(desc)
                 .setContentInfo(desc)
                 .setOngoing(true)
                 .setContentIntent(resultPendingIntent);

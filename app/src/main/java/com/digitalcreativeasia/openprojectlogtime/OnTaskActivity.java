@@ -3,9 +3,11 @@ package com.digitalcreativeasia.openprojectlogtime;
 import android.app.NotificationManager;
 import android.os.Bundle;
 
+import com.digitalcreativeasia.openprojectlogtime.fragments.SubmitFragment;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
 import com.digitalcreativeasia.openprojectlogtime.ui.CountupView;
 import com.digitalcreativeasia.openprojectlogtime.ui.LightStatusBar;
+import com.franmontiel.fullscreendialog.FullScreenDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -63,6 +65,16 @@ public class OnTaskActivity extends AppCompatActivity {
             mNotificationManager.cancel(App.KEY.NOTIFICATION_CODE);
             Toast.makeText(this, "Task cancelled", Toast.LENGTH_LONG).show();
             finish();
+        });
+
+
+        mSubitButton.setOnClickListener(view -> {
+            Bundle arg = new Bundle();
+            new FullScreenDialogFragment.Builder(this)
+                    .setTitle("Submit Time Entry")
+                    .setContent(SubmitFragment.class, arg)
+                    .build()
+                    .show(getSupportFragmentManager(), "dialog");
         });
 
     }

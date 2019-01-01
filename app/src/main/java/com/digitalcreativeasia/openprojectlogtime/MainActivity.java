@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError err) {
                         hideLoading();
+                        err.printStackTrace();
                         Timber.e("err %s", err.getErrorDetail());
                         String msg = ErrorResponseInspector.inspect(err);
                         showSnackBar(msg);
