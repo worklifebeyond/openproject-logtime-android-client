@@ -61,6 +61,7 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_task);
+        getListStatuses();
         ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         LightStatusBar.inspect(this, toolbar);
@@ -167,6 +168,33 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
                         showSnackBar(msg, "Exit", view -> finish());
                     }
                 });
+    }
+
+
+    void getListStatuses() {
+        AndroidNetworking.get(App.getApplication().getResources().getString(R.string.baseUrl)
+                + App.PATH.GETLIST_STATUS)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Timber.i("resp: %s", response.toString());
+                        try {
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError err) {
+                        Timber.e("err %s", err.getErrorDetail());
+                        String msg = ErrorResponseInspector.inspect(err);
+                        showSnackBar(msg, "Exit", view -> finish());
+                    }
+                });
+
     }
 
 
