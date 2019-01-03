@@ -7,115 +7,14 @@
     android:background="@color/separator"
     android:orientation="vertical">
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/progress_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:fontFamily="@font/opensans_light"
-            android:text="Progress" />
-
-
-        <RelativeLayout
-            android:layout_below="@id/progress_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/opensans_light"
-                android:text="Change" />
-
-            <TextView
-                android:id="@+id/text_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_toLeftOf="@id/button_change"
-                android:fontFamily="@font/opensans_light"
-                android:text="45%" />
-
-            <androidx.appcompat.widget.AppCompatSeekBar
-                android:id="@+id/progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/text_progress"
-                android:max="100"
-                android:progress="45" />
-        </RelativeLayout>
-    </RelativeLayout>
-
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/text_last_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/opensans_light"
         android:text="3 Hours ago" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/opensans_bold"
-            android:padding="5dp"
-            android:text="Date (Start-Due): "
-            android:textColor="@color/mainSignature" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_weight="3"
-            android:id="@+id/text_from"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/opensans_bold"
-            android:padding="5dp"
-            android:text="No Start Date"
-            android:textColor="@color/colorAccent" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:id="@+id/text_to"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/opensans_bold"
-            android:padding="5dp"
-            android:text="No End Date"
-            android:textColor="@color/colorAccent" />
-
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/text_title"
@@ -124,7 +23,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="0dp"
         android:fontFamily="@font/opensans_light"
         android:text="[138] Open Sans Light Open Sans Light  Open Sans Light  Open Sans Light "
         android:textColor="@color/mainSignature"
@@ -189,6 +88,115 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/opensans_bold"
+            android:padding="5dp"
+            android:text="Date (Start-Due): "
+            android:textColor="@color/mainSignature" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/text_from"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/opensans_bold"
+            android:padding="5dp"
+            android:text="No Start Date"
+            android:textColor="@color/colorAccent" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/text_to"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/opensans_bold"
+            android:padding="5dp"
+            android:text="No End Date"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/progress_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/opensans_light"
+            android:text="Progress" />
+
+
+        <RelativeLayout
+            android:layout_below="@id/progress_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/opensans_light"
+                android:text="Change" />
+
+            <TextView
+                android:id="@+id/text_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/button_change"
+                android:fontFamily="@font/opensans_light"
+                android:text="45%" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@id/text_progress"
+                android:max="100"
+                android:progress="45" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+
+
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"

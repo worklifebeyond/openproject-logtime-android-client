@@ -8,16 +8,20 @@ import java.util.List;
 
 public class Commons {
 
-    public static boolean isStatusStored(){
+    public static boolean isStatusStored() {
 
-        try{
+        try {
             ArrayList<Object> statusModelList
                     = App.getTinyDB().getListObject(App.KEY.LIST_STATUSES, StatusModel.class);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
+    }
 
+    public static String normalizeNonZero(int num) {
+        if (num < 10) return "0" + num;
+        else return "" + num;
     }
 
 }

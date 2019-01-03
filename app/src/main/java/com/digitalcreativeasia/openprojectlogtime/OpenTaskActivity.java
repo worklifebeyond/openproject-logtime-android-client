@@ -234,10 +234,10 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
     @Override
     public void onRefresh(boolean success) {
         if (success) {
-            Toast.makeText(this, "Sukses update presentasi", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Sukses update item", Toast.LENGTH_LONG).show();
             loadTask(String.valueOf(mUser.getId()));
         } else {
-            showSnackBar("Gagal update prosentase", "RELOAD", view -> {
+            showSnackBar("Gagal update item", "RELOAD", view -> {
                 loadTask(String.valueOf(mUser.getId()));
             });
         }

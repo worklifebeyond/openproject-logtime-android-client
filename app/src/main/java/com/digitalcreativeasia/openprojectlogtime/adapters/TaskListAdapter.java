@@ -24,12 +24,14 @@ import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
 import com.digitalcreativeasia.openprojectlogtime.utils.Commons;
 import com.digitalcreativeasia.openprojectlogtime.utils.ISO8601;
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -171,17 +173,51 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
         });
 
+        holder.textFrom.setPaintFlags(holder.textFrom.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        holder.textTo.setPaintFlags(holder.textTo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         if (model.getStartDate() == null) {
             holder.textFrom.setText("No Start Date");
-            holder.textFrom.setPaintFlags(holder.textFrom.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         } else holder.textFrom.setText(model.getStartDate());
 
         if (model.getDueDate() == null) {
             holder.textTo.setText("No Due Date");
-            holder.textTo.setPaintFlags(holder.textTo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         } else holder.textTo.setText(model.getDueDate());
 
+
+        holder.textFrom.setOnClickListener(view -> {
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    (v, year, monthOfYear, dayOfMonth) -> {
+                        String date = "" + year + "-" +
+                                Commons.normalizeNonZero((++monthOfYear)) + "-" + Commons.normalizeNonZero(dayOfMonth);
+                        holder.textFrom.setText(date);
+                        updateDate(date, model.getLockVersion(), String.valueOf(model.getId()), true);
+                    },
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+            dpd.show(((AppCompatActivity) context).getSupportFragmentManager(), "Datepickerdialog");
+        });
+
+
+
+        holder.textTo.setOnClickListener(view -> {
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    (v, year, monthOfYear, dayOfMonth) -> {
+                        String date = "" + year + "-" +
+                                Commons.normalizeNonZero((++monthOfYear)) + "-" + Commons.normalizeNonZero(dayOfMonth);
+                        holder.textTo.setText(date);
+                        updateDate(date, model.getLockVersion(), String.valueOf(model.getId()), false);
+                    },
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+            dpd.show(((AppCompatActivity) context).getSupportFragmentManager(), "Datepickerdialog");
+        });
 
     }
 
@@ -300,5 +336,41 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                     }
                 });
     }
+
+
+    void updateDate(String date, int lockVersion, String wpId, boolean isStartdate) {
+        progressDialog.show();
+        JSONObject object = new JSONObject();
+        try {
+            object.put("lockVersion", lockVersion);
+            if (isStartdate)
+                object.put("startDate", date);
+            else object.put("dueDate", date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_WORK_PACKAGES + wpId;
+        String apiKey = App.getTinyDB().getString(App.KEY.API, "");
+        AndroidNetworking.patch(url)
+                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addJSONObjectBody(object)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        progressDialog.dismiss();
+                        listener.onRefresh(true);
+                    }
+
+                    @Override
+                    public void onError(ANError err) {
+                        progressDialog.dismiss();
+                        listener.onRefresh(false);
+                    }
+                });
+    }
+
 
 }
