@@ -117,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
                         hideLoading();
                         Timber.e("resp %s", response.toString());
                         try {
-                            JSONArray users = response.getJSONObject("_embedded").getJSONArray("elements");
-                            checkUserValid(users, userIdentity, apiKey);
+                            //JSONArray users = response.getJSONObject("_embedded").getJSONArray("elements");
+                            User user = new Gson().fromJson(response.toString(), User.class);
+                            checkUserValid(user, userIdentity, apiKey);
                         } catch (Exception e) {
                             e.printStackTrace();
                             showSnackBar("Error on parsing data");
@@ -137,14 +138,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void checkUserValid(JSONArray users, String email, String apikey) {
+    void checkUserValid(User user, String email, String apikey) {
         boolean isUserAvailable = false;
-        try {
-            for (int i = 0; i < users.length(); i++) {
-                JSONObject object = users.getJSONObject(i);
-                if (object.getString("login").equals(email)) {
+        //try {
+        //    for (int i = 0; i < users.length(); i++) {
+        //        JSONObject object = users.getJSONObject(i);
+                if (user.getLogin().equals(email)) {
                     isUserAvailable = true;
-                    User user = new Gson().fromJson(object.toString(), User.class);
+                    //User user = new Gson().fromJson(object.toString(), User.class);
                     Timber.i("Halo %s", user.getName());
                     App.getTinyDB().putString(App.KEY.API, apikey);
                     App.plantAuth();
@@ -152,14 +153,14 @@ public class MainActivity extends AppCompatActivity {
                     App.getTinyDB().putBoolean(App.KEY.IS_LOGGED_IN, true);
                     this.toDashboard();
                 }
-            }
+           // }
 
             if (!isUserAvailable)
                 showSnackBar("Email not registered, please check again");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
     }
 
 
