@@ -150,8 +150,10 @@ public class OnTaskActivity extends AppCompatActivity {
                         Timber.e("eeeeeeeeeeeeeeeeeeee " + response.code());
                         progressDialog.dismiss();
                         mCountView.stop();
+                        cancelTask();
+                        mSubitButton.setEnabled(false);
                         showSnackBar("Time entry submitterd", "OK", view -> {
-                            cancelTask();
+                            //cancelTask();
                             finish();
                         });
                     }
