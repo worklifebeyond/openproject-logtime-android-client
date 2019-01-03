@@ -18,13 +18,17 @@ import com.androidnetworking.interfaces.OkHttpResponseListener;
 import com.digitalcreativeasia.openprojectlogtime.App;
 import com.digitalcreativeasia.openprojectlogtime.R;
 import com.digitalcreativeasia.openprojectlogtime.fragments.DescFragment;
+import com.digitalcreativeasia.openprojectlogtime.pojos.StatusModel;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
+import com.digitalcreativeasia.openprojectlogtime.utils.Commons;
 import com.digitalcreativeasia.openprojectlogtime.utils.ISO8601;
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment;
 
+import org.angmarch.views.NiceSpinner;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,7 +77,26 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
         TaskModel model = taskModels.get(position);
 
-        holder.buttonStatus.setText(model.getLinks().getStatus().getTitle());
+
+        if (Commons.isStatusStored()) {
+            int statPos = 0;
+            List<Object> statuses = App.getTinyDB().getListObject(App.KEY.LIST_STATUSES, StatusModel.class);
+            List<String> statStrings = new ArrayList<>();
+            for (int i = 0; i < statuses.size(); i++) {
+                StatusModel stat = (StatusModel) statuses.get(i);
+                statStrings.add(stat.getName());
+                if (stat.getName().equals(model.getLinks().getStatus().getTitle())) {
+                    statPos = i;
+                }
+            }
+            holder.spinnerStatus.attachDataSource(statStrings);
+            holder.spinnerStatus.setSelectedIndex(statPos);
+        } else {
+            List<String> status = new ArrayList<>();
+            status.add(model.getLinks().getStatus().getTitle());
+            holder.spinnerStatus.attachDataSource(status);
+        }
+
 
         holder.buttonChange.setOnClickListener(view -> {
             if (holder.progress.isEnabled()) {
@@ -158,7 +181,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView textLastActivity;
         TextView textTitle;
         TextView textProjectName;
-        AppCompatButton buttonDesc, buttonChange, buttonStatus, buttonTimeEntry;
+        AppCompatButton buttonDesc, buttonChange, buttonTimeEntry;
+        NiceSpinner spinnerStatus;
 
         public ViewHolder(View view) {
             super(view);
@@ -170,8 +194,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             textProjectName = view.findViewById(R.id.text_project);
             buttonDesc = view.findViewById(R.id.button_desc);
             buttonChange = view.findViewById(R.id.button_change);
-            buttonStatus = view.findViewById(R.id.button_status);
             buttonTimeEntry = view.findViewById(R.id.button_time);
+
+            spinnerStatus = view.findViewById(R.id.spinner_status);
 
             progress.setEnabled(false);
         }

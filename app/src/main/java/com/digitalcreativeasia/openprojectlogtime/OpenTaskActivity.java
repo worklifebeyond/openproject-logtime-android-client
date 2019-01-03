@@ -189,7 +189,9 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
                                         StatusModel.class);
                                 listStatus.add(model);
                             }
+
                             App.getTinyDB().putListObject(App.KEY.LIST_STATUSES, listStatus);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

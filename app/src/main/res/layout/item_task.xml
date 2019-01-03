@@ -124,27 +124,24 @@
             android:layout_width="match_parent"
             android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|start"
+            android:layout_gravity="left|start|center_vertical"
             android:backgroundTint="@color/mainSignature"
             android:fontFamily="@font/opensans_light"
             android:text="Description"
             android:textColor="@color/white" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_status"
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/spinner_status"
+            app:fontFamily="@font/opensans_light"
             android:layout_width="match_parent"
             android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|start"
-            android:backgroundTint="@color/blackSignature"
-            android:fontFamily="@font/opensans_light"
-            android:text="New"
-            android:textColor="@color/white" />
+            android:layout_margin="5dp"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_time"
             android:layout_width="match_parent"
             android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|start"
+            android:layout_gravity="left|start|center_vertical"
             android:backgroundTint="@color/colorAccent"
             android:fontFamily="@font/opensans_light"
             android:text="Time Entries"
