@@ -73,6 +73,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
         TaskModel model = taskModels.get(position);
 
+        holder.buttonStatus.setText(model.getLinks().getStatus().getTitle());
 
         holder.buttonChange.setOnClickListener(view -> {
             if (holder.progress.isEnabled()) {
@@ -121,7 +122,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 model.getLinks().getProject().getTitle() :
                 model.getLinks().getParent().getTitle() + " > " + model.getLinks().getProject().getTitle();
         holder.textProjectName.setText(projectName);
-        holder.itemView.setOnClickListener(view -> listener.onSelect(model));
+        holder.buttonTimeEntry.setOnClickListener(view -> listener.onSelect(model));
         holder.buttonDesc.setOnClickListener(view -> {
 
             Bundle arg = new Bundle();
@@ -157,7 +158,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView textLastActivity;
         TextView textTitle;
         TextView textProjectName;
-        AppCompatButton buttonDesc, buttonChange;
+        AppCompatButton buttonDesc, buttonChange, buttonStatus, buttonTimeEntry;
 
         public ViewHolder(View view) {
             super(view);
@@ -169,6 +170,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             textProjectName = view.findViewById(R.id.text_project);
             buttonDesc = view.findViewById(R.id.button_desc);
             buttonChange = view.findViewById(R.id.button_change);
+            buttonStatus = view.findViewById(R.id.button_status);
+            buttonTimeEntry = view.findViewById(R.id.button_time);
 
             progress.setEnabled(false);
         }

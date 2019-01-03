@@ -117,16 +117,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="6"
             android:layout_height="wrap_content"
             android:layout_gravity="left|start"
             android:backgroundTint="@color/mainSignature"
             android:fontFamily="@font/opensans_light"
             android:text="Description"
+            android:textColor="@color/white" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_status"
+            android:layout_width="match_parent"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|start"
+            android:backgroundTint="@color/blackSignature"
+            android:fontFamily="@font/opensans_light"
+            android:text="New"
+            android:textColor="@color/white" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_time"
+            android:layout_width="match_parent"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|start"
+            android:backgroundTint="@color/colorAccent"
+            android:fontFamily="@font/opensans_light"
+            android:text="Time Entries"
             android:textColor="@color/white" />
     </LinearLayout>
 

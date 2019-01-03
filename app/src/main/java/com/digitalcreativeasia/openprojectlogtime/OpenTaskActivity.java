@@ -17,6 +17,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.digitalcreativeasia.openprojectlogtime.adapters.TaskListAdapter;
 import com.digitalcreativeasia.openprojectlogtime.interfaces.CustomSnackBarListener;
+import com.digitalcreativeasia.openprojectlogtime.pojos.StatusModel;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
 import com.digitalcreativeasia.openprojectlogtime.pojos.user.User;
 import com.digitalcreativeasia.openprojectlogtime.ui.LightStatusBar;
@@ -181,7 +182,14 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
                     public void onResponse(JSONObject response) {
                         Timber.i("resp: %s", response.toString());
                         try {
-
+                            JSONArray array = response.getJSONObject("_embedded").getJSONArray("elements");
+                            ArrayList<Object> listStatus = new ArrayList<>();
+                            for (int i = 0; i < array.length(); i++) {
+                                StatusModel model = new Gson().fromJson(array.getJSONObject(i).toString(),
+                                        StatusModel.class);
+                                listStatus.add(model);
+                            }
+                            App.getTinyDB().putListObject(App.KEY.LIST_STATUSES, listStatus);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
