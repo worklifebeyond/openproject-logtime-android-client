@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.AdapterView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -91,6 +91,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             }
             holder.spinnerStatus.attachDataSource(statStrings);
             holder.spinnerStatus.setSelectedIndex(statPos);
+            holder.spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    updateStatus((StatusModel) statuses.get(i), model.getLockVersion());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
         } else {
             List<String> status = new ArrayList<>();
             status.add(model.getLinks().getStatus().getTitle());
@@ -203,8 +214,23 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
 
-    void updatePercentage(int percentage, int lockVersion, String wpId) {
+    void updateStatus(StatusModel model, int lockVersion){
+        progressDialog.show();
+        JSONObject object = new JSONObject();
+        try {
+            object.put("lockVersion", lockVersion);
+            JSONObject _link = new JSONObject();
+            JSONObject _status = new JSONObject();
+            _status.put("href", "/project/api/v3/statuses/"+model.getId());
+            _status.put("title", model.getName());
+            _link.put("status", _status);
+            object.put("_links", _link);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    void updatePercentage(int percentage, int lockVersion, String wpId) {
         progressDialog.show();
         JSONObject object = new JSONObject();
         try {
@@ -214,7 +240,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             e.printStackTrace();
         }
 
-        String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_PERCENTAGE + wpId;
+        String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_WORK_PACKAGES + wpId;
         String apiKey = App.getTinyDB().getString(App.KEY.API, "");
         AndroidNetworking.patch(url)
                 .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
