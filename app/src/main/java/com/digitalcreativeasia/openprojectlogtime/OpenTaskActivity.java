@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
 import com.digitalcreativeasia.openprojectlogtime.pojos.user.User;
 import com.digitalcreativeasia.openprojectlogtime.ui.LightStatusBar;
 import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
+import com.evolve.backdroplibrary.BackdropContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,6 +51,10 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
     SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.backdropcontainer)
+    BackdropContainer backdropContainer;
+    @BindView(R.id.button_logout)
+    AppCompatButton mLogoutButton;
 
     Snackbar mSnackBar;
     User mUser;
@@ -65,8 +72,13 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         getListStatuses();
         ButterKnife.bind(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Open Tasks");
         LightStatusBar.inspect(this, toolbar);
-        setSupportActionBar(toolbar);
+        int height= this.getResources().getDimensionPixelSize(R.dimen.sneek_height);
+        backdropContainer.attachToolbar(toolbar)
+                .dropInterpolator(new LinearInterpolator())
+                .dropHeight(height)
+                .build();
 
         mUser = App.getTinyDB().getObject(App.KEY.USER, User.class);
         taskModelList = new ArrayList<>();
@@ -75,8 +87,6 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
             startActivity(new Intent(this, OnTaskActivity.class));
         }
         this.initViews();
-
-        //loadTask(String.valueOf(mUser.getId()));
 
 
     }
@@ -100,6 +110,15 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
             showNotification(App.getTinyDB().getString(App.KEY.CURRENT_WORK_PACKAGE_NAME, "Task"));
             startActivity(new Intent(this, OnTaskActivity.class));
         }
+
+        mLogoutButton.setOnClickListener(view -> {
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.cancel(App.KEY.NOTIFICATION_CODE);
+            App.getTinyDB().clear();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            Toast.makeText(this, "Logout...", Toast.LENGTH_LONG).show();
+        });
 
     }
 
