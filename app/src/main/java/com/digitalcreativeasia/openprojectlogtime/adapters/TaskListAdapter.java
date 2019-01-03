@@ -94,7 +94,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             holder.spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    updateStatus((StatusModel) statuses.get(i), model.getLockVersion());
+                    updateStatus((StatusModel) statuses.get(i),
+                            model.getLockVersion(), String.valueOf(model.getId()));
                 }
 
                 @Override
@@ -192,6 +193,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView textLastActivity;
         TextView textTitle;
         TextView textProjectName;
+        TextView textFrom, textTo;
         AppCompatButton buttonDesc, buttonChange, buttonTimeEntry;
         NiceSpinner spinnerStatus;
 
@@ -214,7 +216,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
 
-    void updateStatus(StatusModel model, int lockVersion){
+    void updateStatus(StatusModel model, int lockVersion, String wpId){
         progressDialog.show();
         JSONObject object = new JSONObject();
         try {
@@ -228,9 +230,31 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_WORK_PACKAGES + wpId;
+        String apiKey = App.getTinyDB().getString(App.KEY.API, "");
+        AndroidNetworking.patch(url)
+                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addJSONObjectBody(object)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        progressDialog.dismiss();
+                        listener.onRefresh(true);
+                    }
+
+                    @Override
+                    public void onError(ANError err) {
+                        progressDialog.dismiss();
+                        listener.onRefresh(false);
+                    }
+                });
     }
 
     void updatePercentage(int percentage, int lockVersion, String wpId) {
+
         progressDialog.show();
         JSONObject object = new JSONObject();
         try {
