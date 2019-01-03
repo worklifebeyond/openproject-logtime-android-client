@@ -3,6 +3,7 @@ package com.digitalcreativeasia.openprojectlogtime.adapters;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +77,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         TaskModel model = taskModels.get(position);
-
 
         if (Commons.isStatusStored()) {
             int statPos = 0;
@@ -171,6 +171,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
         });
 
+
+        if (model.getStartDate() == null) {
+            holder.textFrom.setText("No Start Date");
+            holder.textFrom.setPaintFlags(holder.textFrom.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else holder.textFrom.setText(model.getStartDate());
+
+        if (model.getDueDate() == null) {
+            holder.textTo.setText("No Due Date");
+            holder.textTo.setPaintFlags(holder.textTo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else holder.textTo.setText(model.getDueDate());
+
+
     }
 
 
@@ -212,18 +224,21 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             spinnerStatus = view.findViewById(R.id.spinner_status);
 
             progress.setEnabled(false);
+
+            textFrom = view.findViewById(R.id.text_from);
+            textTo = view.findViewById(R.id.text_to);
         }
     }
 
 
-    void updateStatus(StatusModel model, int lockVersion, String wpId){
+    void updateStatus(StatusModel model, int lockVersion, String wpId) {
         progressDialog.show();
         JSONObject object = new JSONObject();
         try {
             object.put("lockVersion", lockVersion);
             JSONObject _link = new JSONObject();
             JSONObject _status = new JSONObject();
-            _status.put("href", "/project/api/v3/statuses/"+model.getId());
+            _status.put("href", "/project/api/v3/statuses/" + model.getId());
             _status.put("title", model.getName());
             _link.put("status", _status);
             object.put("_links", _link);
