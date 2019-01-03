@@ -60,6 +60,17 @@ public class Links {
     @SerializedName("type")
     @Expose
     private Parent type;
+    @SerializedName("priority")
+    @Expose
+    private Parent priority;
+
+    public Parent getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Parent priority) {
+        this.priority = priority;
+    }
 
     public Parent getType() {
         return type;

@@ -3,6 +3,7 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="redCrimson">#aa5252</color>
 
     <color name="white">#fcfcfc</color>
     <color name="mainSignature">#008577</color>

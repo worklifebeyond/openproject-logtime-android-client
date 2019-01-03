@@ -185,6 +185,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             holder.textTo.setText("No Due Date");
         } else holder.textTo.setText(model.getDueDate());
 
+        holder.textPrior.setText(model.getLinks().getPriority().getTitle());
 
         holder.textFrom.setOnClickListener(view -> {
             Calendar now = Calendar.getInstance();
@@ -244,7 +245,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView textFrom, textTo;
         AppCompatButton buttonDesc, buttonChange, buttonTimeEntry;
         NiceSpinner spinnerStatus;
-        TextView textType;
+        TextView textType, textPrior;
 
         public ViewHolder(View view) {
             super(view);
@@ -259,7 +260,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             buttonTimeEntry = view.findViewById(R.id.button_time);
             textType = view.findViewById(R.id.text_type);
             spinnerStatus = view.findViewById(R.id.spinner_status);
-
+            textPrior = view.findViewById(R.id.text_prior);
             progress.setEnabled(false);
 
             textFrom = view.findViewById(R.id.text_from);
