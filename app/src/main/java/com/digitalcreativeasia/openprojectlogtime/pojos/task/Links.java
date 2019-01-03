@@ -57,6 +57,17 @@ public class Links {
     @SerializedName("parent")
     @Expose
     private Parent parent;
+    @SerializedName("type")
+    @Expose
+    private Parent type;
+
+    public Parent getType() {
+        return type;
+    }
+
+    public void setType(Parent type) {
+        this.type = type;
+    }
 
     public Self getSelf() {
         return self;

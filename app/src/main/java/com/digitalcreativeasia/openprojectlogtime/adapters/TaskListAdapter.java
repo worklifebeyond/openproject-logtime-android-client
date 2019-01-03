@@ -91,6 +91,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                     statPos = i;
                 }
             }
+            holder.textType.setText(model.getLinks().getType().getTitle());
             holder.spinnerStatus.attachDataSource(statStrings);
             holder.spinnerStatus.setSelectedIndex(statPos);
             holder.spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -218,7 +219,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             );
             dpd.show(((AppCompatActivity) context).getSupportFragmentManager(), "Datepickerdialog");
         });
-
     }
 
 
@@ -244,6 +244,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView textFrom, textTo;
         AppCompatButton buttonDesc, buttonChange, buttonTimeEntry;
         NiceSpinner spinnerStatus;
+        TextView textType;
 
         public ViewHolder(View view) {
             super(view);
@@ -256,7 +257,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             buttonDesc = view.findViewById(R.id.button_desc);
             buttonChange = view.findViewById(R.id.button_change);
             buttonTimeEntry = view.findViewById(R.id.button_time);
-
+            textType = view.findViewById(R.id.text_type);
             spinnerStatus = view.findViewById(R.id.spinner_status);
 
             progress.setEnabled(false);
