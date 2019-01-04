@@ -18,6 +18,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.OkHttpResponseListener;
 import com.digitalcreativeasia.openprojectlogtime.App;
 import com.digitalcreativeasia.openprojectlogtime.R;
+import com.digitalcreativeasia.openprojectlogtime.fragments.ActivityFragment;
 import com.digitalcreativeasia.openprojectlogtime.fragments.DescFragment;
 import com.digitalcreativeasia.openprojectlogtime.pojos.StatusModel;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Credentials;
@@ -204,7 +206,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         });
 
 
-
         holder.textTo.setOnClickListener(view -> {
             Calendar now = Calendar.getInstance();
             DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -220,6 +221,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             );
             dpd.show(((AppCompatActivity) context).getSupportFragmentManager(), "Datepickerdialog");
         });
+
+
+        holder.commentButton.setOnClickListener(view -> {
+            Bundle arg = new Bundle();
+            arg.putString(ActivityFragment.WORK_PACKAGES_ID, String.valueOf(model.getId()));
+            new FullScreenDialogFragment.Builder(context)
+                    .setTitle("Activity")
+                    .setContent(ActivityFragment.class, arg)
+                    .build()
+                    .show(((AppCompatActivity) context).getSupportFragmentManager(), "dialog");
+        });
+
     }
 
 
@@ -246,6 +259,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         AppCompatButton buttonDesc, buttonChange, buttonTimeEntry;
         NiceSpinner spinnerStatus;
         TextView textType, textPrior;
+        AppCompatImageButton commentButton;
 
         public ViewHolder(View view) {
             super(view);
@@ -262,9 +276,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             spinnerStatus = view.findViewById(R.id.spinner_status);
             textPrior = view.findViewById(R.id.text_prior);
             progress.setEnabled(false);
-
+            commentButton = view.findViewById(R.id.button_comment);
             textFrom = view.findViewById(R.id.text_from);
             textTo = view.findViewById(R.id.text_to);
+
         }
     }
 

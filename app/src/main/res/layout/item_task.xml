@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
-
+            android:id="@+id/button_comment"
             style="@style/Widget.AppCompat.ImageButton"
             android:src="@drawable/comment_icon"
             />

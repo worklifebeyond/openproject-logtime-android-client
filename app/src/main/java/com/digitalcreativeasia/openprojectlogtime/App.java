@@ -38,6 +38,7 @@ public class App extends Application {
         String ENUM_LIST = "enum";
         String UPDATE_WORK_PACKAGES = "project/api/v3/work_packages/";
         String GETLIST_STATUS = "project/api/v3/statuses";
+        String LIST_ACTIVITY = "project/api/v3/work_packages/%s/activities";
     }
 
     public interface KEY {
