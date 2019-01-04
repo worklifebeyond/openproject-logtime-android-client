@@ -3,18 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_send"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/button_send"
+            android:layout_alignParentRight="true"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/input_comment"
+            android:layout_toLeftOf="@id/button_send"
+            android:hint="Add comments"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:background="@color/mainSignature"
+            android:layout_height="wrap_content" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
+            android:layout_above="@id/input_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -27,5 +50,5 @@
                 android:layout_marginBottom="10dp"
                 android:scrollbars="none" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

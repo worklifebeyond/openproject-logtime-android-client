@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.OkHttpResponseListener;
 import com.digitalcreativeasia.openprojectlogtime.App;
 import com.digitalcreativeasia.openprojectlogtime.R;
 import com.digitalcreativeasia.openprojectlogtime.adapters.ActivityAdapter;
@@ -19,6 +21,7 @@ import com.digitalcreativeasia.openprojectlogtime.utils.ErrorResponseInspector;
 import com.franmontiel.fullscreendialog.FullScreenDialogContent;
 import com.franmontiel.fullscreendialog.FullScreenDialogController;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -28,12 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 import timber.log.Timber;
 
 public class ActivityFragment extends Fragment implements FullScreenDialogContent {
@@ -44,10 +49,16 @@ public class ActivityFragment extends Fragment implements FullScreenDialogConten
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.button_send)
+    AppCompatImageButton mButtonSend;
+    @BindView(R.id.input_comment)
+    TextInputEditText mCommentInput;
+
     public static final String WORK_PACKAGES_ID = "work.packages.id";
+    public static final String POST_COMMENT_URL = "post.comment.url";
 
     FullScreenDialogController dialogController;
-    String mWPId;
+    String mWPId, mCommentUrl;
     ActivityAdapter mAdapter;
     List<RowComment> comments;
 
@@ -66,8 +77,15 @@ public class ActivityFragment extends Fragment implements FullScreenDialogConten
         super.onActivityCreated(savedInstanceState);
         comments = new ArrayList<>();
         mWPId = getArguments().getString(WORK_PACKAGES_ID);
-
+        mCommentUrl = getArguments().getString(POST_COMMENT_URL);
         mRefreshLayout.setOnRefreshListener(this::loadActivity);
+        mButtonSend.setOnClickListener(view -> {
+            String comment = mCommentInput.getText().toString();
+            if(comment.isEmpty()) Toast.makeText(getContext(), "Comment empty", Toast.LENGTH_LONG).show();
+            else {
+                addComment(comment);
+            }
+        });
         loadActivity();
     }
 
@@ -113,6 +131,7 @@ public class ActivityFragment extends Fragment implements FullScreenDialogConten
                                 } else {
                                     RowComment r2 = new RowComment();
                                     r2.setDate(model.getCreatedAt());
+                                    Timber.e("errrrrr "+model.getCreatedAt());
                                     r2.setContent("<b>Comments: </b>" + model.getComment().getHtml());
                                     comments.add(r2);
                                     for (int j = 0; j < model.getDetails().size(); j++) {
@@ -141,6 +160,43 @@ public class ActivityFragment extends Fragment implements FullScreenDialogConten
                     }
                 });
     }
+
+
+    void addComment(String comments) {
+        mRefreshLayout.setRefreshing(true);
+        String url = getString(R.string.baseUrl) + mCommentUrl;
+        JSONObject object = new JSONObject();
+        try {
+            JSONObject comm = new JSONObject();
+            comm.put("raw", comments);
+            object.put("comment", comm);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        AndroidNetworking.post(url)
+                .setPriority(Priority.HIGH)
+                .addJSONObjectBody(object)
+                .build()
+                .getAsOkHttpResponse(new OkHttpResponseListener() {
+                    @Override
+                    public void onResponse(Response response) {
+                        mRefreshLayout.setRefreshing(false);
+                        loadActivity();
+                        mCommentInput.setText("");
+                        mRecyclerView.smoothScrollToPosition(comments.length()-1);
+                    }
+
+                    @Override
+                    public void onError(ANError err) {
+                        mRefreshLayout.setRefreshing(false);
+                        Timber.e("err %s", err.getErrorDetail());
+                        String msg = ErrorResponseInspector.inspect(err);
+                        Snackbar.make(mRecyclerView, msg, Snackbar.LENGTH_LONG)
+                                .setAction("CLOSE", view -> dialogController.discard());
+                    }
+                });
+    }
+
 
     void setData() {
         if (mAdapter == null) {

@@ -22,6 +22,7 @@ import com.digitalcreativeasia.openprojectlogtime.fragments.ActivityFragment;
 import com.digitalcreativeasia.openprojectlogtime.fragments.DescFragment;
 import com.digitalcreativeasia.openprojectlogtime.pojos.StatusModel;
 import com.digitalcreativeasia.openprojectlogtime.pojos.task.TaskModel;
+import com.digitalcreativeasia.openprojectlogtime.pojos.timeentry.Activity;
 import com.digitalcreativeasia.openprojectlogtime.utils.Commons;
 import com.digitalcreativeasia.openprojectlogtime.utils.ISO8601;
 import com.franmontiel.fullscreendialog.FullScreenDialogFragment;
@@ -226,12 +227,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         holder.commentButton.setOnClickListener(view -> {
             Bundle arg = new Bundle();
             arg.putString(ActivityFragment.WORK_PACKAGES_ID, String.valueOf(model.getId()));
+            arg.putString(ActivityFragment.POST_COMMENT_URL, model.getLinks().getAddComment().getHref());
             new FullScreenDialogFragment.Builder(context)
                     .setTitle("Activity")
                     .setContent(ActivityFragment.class, arg)
                     .build()
                     .show(((AppCompatActivity) context).getSupportFragmentManager(), "dialog");
         });
+
+
 
     }
 

@@ -52,11 +52,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         RowComment model = activityModels.get(position);
         if (model.getDate().equals("")) {
+            holder.dateText.setText(model.getDate());
             holder.dateText.setVisibility(View.GONE);
         } else {
             try {
                 String date = ISO8601.toReadable(model.getDate());
                 holder.dateText.setText(date);
+                holder.dateText.setVisibility(View.VISIBLE);
             } catch (ParseException e) {
                 holder.dateText.setText(model.getDate());
                 e.printStackTrace();
