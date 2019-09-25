@@ -187,7 +187,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         String apiKey = App.getTinyDB().getString(App.KEY.API, "");
         AndroidNetworking.get(App.getApplication().getResources().getString(R.string.time_entries_api)
                 + App.PATH.ENUM_LIST)
-                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONArray(new JSONArrayRequestListener() {
@@ -222,6 +222,7 @@ public class TimeEntriesActivity extends AppCompatActivity implements TimeEntrie
         String url = String.format(App.PATH.TIME_ENTRIES_LIST, workPackageId);
         AndroidNetworking.get(App.getApplication().getResources().getString(R.string.baseUrl)
                 + url)
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

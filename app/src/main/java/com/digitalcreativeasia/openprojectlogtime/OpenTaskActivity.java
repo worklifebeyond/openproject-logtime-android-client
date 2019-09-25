@@ -160,6 +160,7 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
         String url = String.format(App.PATH.OPEN_TASK, userID);
         AndroidNetworking.get(App.getApplication().getResources().getString(R.string.baseUrl)
                 + url)
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -194,6 +195,7 @@ public class OpenTaskActivity extends AppCompatActivity implements TaskListAdapt
     void getListStatuses() {
         AndroidNetworking.get(App.getApplication().getResources().getString(R.string.baseUrl)
                 + App.PATH.GETLIST_STATUS)
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

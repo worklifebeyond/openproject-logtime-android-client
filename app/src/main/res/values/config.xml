@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="baseUrl">open project base url</string>
+    <string name="baseUrl">http://68.183.227.235/</string>
+    <string name="time_entries_api">http://68.183.227.235:4000/</string>
     <string name="debug_api_key">test</string>
 </resources>

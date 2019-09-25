@@ -29,7 +29,7 @@ public class TaskModel {
     private String dueDate;
     @SerializedName("estimatedTime")
     @Expose
-    private Double estimatedTime;
+    private String estimatedTime;
     @SerializedName("spentTime")
     @Expose
     private String spentTime;
@@ -53,7 +53,7 @@ public class TaskModel {
     private String overallCosts;
     @SerializedName("remainingTime")
     @Expose
-    private Double remainingTime;
+    private String remainingTime;
     @SerializedName("_links")
     @Expose
     private Links links;
@@ -114,11 +114,11 @@ public class TaskModel {
         this.dueDate = dueDate;
     }
 
-    public Double getEstimatedTime() {
+    public String getEstimatedTime() {
         return estimatedTime;
     }
 
-    public void setEstimatedTime(Double estimatedTime) {
+    public void setEstimatedTime(String estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
 
@@ -178,11 +178,11 @@ public class TaskModel {
         this.overallCosts = overallCosts;
     }
 
-    public Double getRemainingTime() {
+    public String getRemainingTime() {
         return remainingTime;
     }
 
-    public void setRemainingTime(Double remainingTime) {
+    public void setRemainingTime(String remainingTime) {
         this.remainingTime = remainingTime;
     }
 

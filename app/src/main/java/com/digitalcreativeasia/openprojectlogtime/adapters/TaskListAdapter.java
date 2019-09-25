@@ -306,7 +306,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_WORK_PACKAGES + wpId;
         String apiKey = App.getTinyDB().getString(App.KEY.API, "");
         AndroidNetworking.patch(url)
-                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addHeaders("Authorization", App.getAuthHeader())
                 .addJSONObjectBody(object)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -339,7 +339,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_WORK_PACKAGES + wpId;
         String apiKey = App.getTinyDB().getString(App.KEY.API, "");
         AndroidNetworking.patch(url)
-                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addHeaders("Authorization", App.getAuthHeader())
                 .addJSONObjectBody(object)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -374,7 +374,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         String url = context.getString(R.string.baseUrl) + App.PATH.UPDATE_WORK_PACKAGES + wpId;
         String apiKey = App.getTinyDB().getString(App.KEY.API, "");
         AndroidNetworking.patch(url)
-                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addHeaders("Authorization", App.getAuthHeader())
                 .addJSONObjectBody(object)
                 .setPriority(Priority.HIGH)
                 .build()

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.digitalcreativeasia.openprojectlogtime"
+        applicationId "com.worklifebeyond.openprojectlogtime"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -29,8 +29,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.google.android.material:material:1.0.0-alpha1'
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
-    implementation 'com.jakewharton:butterknife:9.0.0-rc1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.github.franmontiel:FullScreenDialog:1.0.1'
     implementation 'net.danlew:android.joda:2.10.1'

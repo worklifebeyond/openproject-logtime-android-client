@@ -140,7 +140,7 @@ public class OnTaskActivity extends AppCompatActivity {
         Timber.e("err "+map.toString());
 
         AndroidNetworking.post(App.getApplication().getResources().getString(R.string.time_entries_api))
-                .addHeaders("Authorization", Credentials.basic("apikey", apiKey))
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .addBodyParameter(map)
                 .build()

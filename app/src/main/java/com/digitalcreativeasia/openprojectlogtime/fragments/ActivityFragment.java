@@ -97,6 +97,7 @@ public class ActivityFragment extends Fragment implements FullScreenDialogConten
                 mWPId
         );
         AndroidNetworking.get(url)
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -174,6 +175,7 @@ public class ActivityFragment extends Fragment implements FullScreenDialogConten
             e.printStackTrace();
         }
         AndroidNetworking.post(url)
+                .addHeaders("Authorization", App.getAuthHeader())
                 .setPriority(Priority.HIGH)
                 .addJSONObjectBody(object)
                 .build()

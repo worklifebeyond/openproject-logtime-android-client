@@ -32,13 +32,13 @@ public class App extends Application {
     }
 
     public interface PATH {
-        String AUTH = "project/api/v3/users/me";
-        String OPEN_TASK = "project/api/v3/work_packages?filters=[{\"assignee\":{\"operator\":\"=\",\"values\":[\"%s\"]}},{\"status\":{\"operator\":\"o\",\"values\":[\"5\",\"3\"]}}]&offset=1&pageSize=500&sortBy=[[\"updated_at\",\"desc\"]]";
-        String TIME_ENTRIES_LIST = "project/api/v3/time_entries?filters=[{ \"work_package\": { \"operator\": \"=\", \"values\": [\"%s\"] } }]&pageSize=500&sortBy=[[\"id\",\"desc\"]]";
+        String AUTH = "api/v3/users/me";
+        String OPEN_TASK = "api/v3/work_packages?filters=[{\"assignee\":{\"operator\":\"=\",\"values\":[\"%s\"]}},{\"status\":{\"operator\":\"o\",\"values\":[\"5\",\"3\"]}}]&offset=1&pageSize=500&sortBy=[[\"updated_at\",\"desc\"]]";
+        String TIME_ENTRIES_LIST = "api/v3/time_entries?filters=[{ \"work_package\": { \"operator\": \"=\", \"values\": [\"%s\"] } }]&pageSize=500&sortBy=[[\"id\",\"desc\"]]";
         String ENUM_LIST = "enum";
-        String UPDATE_WORK_PACKAGES = "project/api/v3/work_packages/";
-        String GETLIST_STATUS = "project/api/v3/statuses";
-        String LIST_ACTIVITY = "project/api/v3/work_packages/%s/activities";
+        String UPDATE_WORK_PACKAGES = "api/v3/work_packages/";
+        String GETLIST_STATUS = "api/v3/statuses";
+        String LIST_ACTIVITY = "api/v3/work_packages/%s/activities";
     }
 
     public interface KEY {
@@ -62,6 +62,11 @@ public class App extends Application {
         return getApplication().getString(R.string.debug_api_key);
     }
 
+
+    public static String getAuthHeader(){
+        String apiKey = tinyDB.getString(KEY.API, "");
+        return Credentials.basic("apikey", apiKey);
+    }
 
     @Override
     public void onCreate() {
